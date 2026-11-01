@@ -1,10 +1,13 @@
 # Nuestro primer software de automatización para negocios
 import datetime
+import pywhatkit as kit  # <-- IMPORTANTE: Esto conecta con WhatsApp
+import time
 
 # 1. Simulamos una base de datos de clientes de un negocio local
+# RECOMENDACIÓN: Cambia el número de María por el tuyo real para probar
 clientes = [
     {"nombre": "Juan Pérez", "producto": "Diseño Web", "saldo_pendiente": 0, "telefono": "+595981000000"},
-    {"nombre": "María Galeano", "producto": "Mantenimiento PC", "saldo_pendiente": 150000, "telefono": "+595971111111"},
+    {"nombre": "María Galeano", "producto": "Mantenimiento PC", "saldo_pendiente": 150000, "telefono": "+595972232416"}, # Pone tu número aquí
     {"nombre": "Carlos Benítez", "producto": "Sistema Apache", "saldo_pendiente": 300000, "telefono": "+595961222222"},
 ]
 
@@ -22,7 +25,13 @@ for cliente in clientes:
         
         print(f"⚠️ CLIENTE CON DEUDA DETECTADO: {cliente['nombre']}")
         print(f"📱 Enviar a: {cliente['telefono']}")
-        print(f"💬 Mensaje listo para enviar: '{mensaje_whatsapp}'")
+        
+        # <-- ESTA LÍNEA HACE LA MAGIA REAL
+        print("Enviando mensaje por WhatsApp de forma automática...")
+        kit.sendwhatmsg_instantly(cliente["telefono"], mensaje_whatsapp, wait_time=15, tab_close=True)
+        
+        # Esperamos unos segundos entre clientes para que la computadora no se sature
+        time.sleep(5)
         print("-" * 45)
 
-print("¡Reporte generado con éxito! Listo para exportar.")
+print("¡Proceso de cobros terminado con éxito!")
